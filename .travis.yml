@@ -16,7 +16,7 @@ after_success:
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
-  - docker push beiswenger/multi-client
-  - docker push beiswenger/multi-nginx
-  - docker push beiswenger/multi-server
-  - docker push beiswenger/multi-worker
+  - docker push mbeiswenger/multi-client
+  - docker push mbeiswenger/multi-nginx
+  - docker push mbeiswenger/multi-server
+  - docker push mbeiswenger/multi-worker
