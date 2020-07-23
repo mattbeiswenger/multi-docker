@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t mbeiswenger/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run mbeiswenger/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t mbeiswenger/multi-client ./client
+  - docker build -t mbeiswenger/multi-nginx ./nginx
+  - docker build -t mbeiswenger/multi-server ./server
+  - docker build -t mbeiswenger/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push beiswenger/multi-client
+  - docker push beiswenger/multi-nginx
+  - docker push beiswenger/multi-server
+  - docker push beiswenger/multi-worker
